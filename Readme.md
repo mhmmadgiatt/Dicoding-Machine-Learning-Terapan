@@ -262,8 +262,12 @@ Dapat dilihat dari **Model Accuracy Plot** bahwa setelah epochs ke-2, model menu
 ### Confusion Matrix
 *** 
 
-![Confusion Matrix](https://raw.githubusercontent.com/mhmmadgiatt/Dicoding-Machine-Learning-Terapan/main/img/confusion_matrix.png) 
+![Confusion Matrix](https://raw.githubusercontent.com/mhmmadgiatt/Dicoding-Machine-Learning-Terapan/main/img/confusion_matrix.png)
 
+Dapat dilihat dari **Confusion Matrix** bahwa model menunjukkan performa yang baik dengan nilai True Positive mencapai 4028 dan True Negative mencapai 592. Jumlah False Positive dan False Negative relatif rendah, masing-masing 179 dan 119.
+
+### Classification Report
+*** 
 Penulis juga menguji model dengan data _test_ yang sebelumnya sudah dipisahkan dengan hasil seperti berikut tabel 4.  
 
 Tabel 4. _Classification Report_
@@ -296,7 +300,8 @@ Terlihat bahwa model bekerja dengan baik, dari dua label yang diprediksi didapat
 F1-Score Dari kedua label, dapat dilihat bahwa model menghasilkan performa yang baik, terutama pada label Positive karena hampir mendekati 100%, untuk label Negative mendapatkan nilai 80% yang masih cukup baik.
 
 - Kesimpulan
-Kesimpulan Dari **Model Accuracy Plot** kita dapat melihat bahwa model mendapatkan performa yang baik dalam train dengan akurasi 99% dan validasi 90%, performa baik ini juga dibuktikan dengan evaluasi model menggunakan data test yang disiapkan. Dari data test dapat dibuat classification report yang ada di tabel 4. Dari tabel 4 kita dapat melihat skor dari model terhadap 3 metrik yang di generate oleh classification report, dilihat dari hasil dapat disimpulkan bahwa model yang dibuat Good Fit.
+
+Dari **Model Accuracy Plot**, kita dapat melihat bahwa model mendapatkan performa yang baik dalam train dengan akurasi 97% dan validasi 94%. Performa baik ini juga dibuktikan dengan evaluasi model menggunakan data test yang disiapkan. Dari data test dapat dibuat **Classification Report** yang ada di tabel 4. Dari tabel 4 kita dapat melihat skor dari model terhadap 3 metrik yang dihasilkan oleh classification report. Dilihat dari hasil, dapat disimpulkan bahwa model yang dibuat Good Fit.
 
 Referensi:  
   [1] [Alam, M. H., Ryu, W.-J., Lee, S., 2016. Joint multi-grain topic sentiment: modeling semantic aspects for online reviews. Information Sciences 339, 206–223.](https://www.sciencedirect.com/science/article/abs/pii/S0020025516000153)
