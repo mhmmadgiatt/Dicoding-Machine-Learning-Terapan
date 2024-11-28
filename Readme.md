@@ -255,14 +255,14 @@ Dengan:
 ### Model Accuracy Plot
 *** 
 
-![model_accuracy](https://user-images.githubusercontent.com/48939864/204292084-ff41b8d6-5ca5-4959-8681-a7e820f97d9e.png)  
+![model_accuracy](https://raw.githubusercontent.com/mhmmadgiatt/Dicoding-Machine-Learning-Terapan/main/img/plot_performances.png)  
  
 Dapat dilihat dari **Model Accuracy Plot** bahwa setelah epochs ke-2, model menunjukkan performa yang baik dengan nilai akurasi train mencapai sekitar 97% dan akurasi validasi sekitar 94%.
 
 ### Confusion Matrix
 *** 
 
-![Confusion Matrix](https://user-images.githubusercontent.com/48939864/204292084-ff41b8d6-5ca5-4959-8681-a7e820f97d9e.png) 
+![Confusion Matrix](https://raw.githubusercontent.com/mhmmadgiatt/Dicoding-Machine-Learning-Terapan/main/img/confusion_matrix.png) 
 
 Penulis juga menguji model dengan data _test_ yang sebelumnya sudah dipisahkan dengan hasil seperti berikut tabel 4.  
 
