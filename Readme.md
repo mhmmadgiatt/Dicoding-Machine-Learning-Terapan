@@ -255,7 +255,7 @@ Dengan:
 ### Model Accuracy Plot
 *** 
 
-![model_accuracy](https://raw.githubusercontent.com/mhmmadgiatt/Dicoding-Machine-Learning-Terapan/main/img/plot_performances.png)  
+![model_accuracy](https://raw.githubusercontent.com/mhmmadgiatt/Dicoding-Machine-Learning-Terapan/main/img/plot_performances.png)
  
 Dapat dilihat dari **Model Accuracy Plot** bahwa setelah epochs ke-2, model menunjukkan performa yang baik dengan nilai akurasi train mencapai sekitar 97% dan akurasi validasi sekitar 94%.
 
