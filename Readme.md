@@ -10,14 +10,44 @@ Ulasan-ulasan ini mengandung sentimen, opini, kritik, dan masukan yang sangat be
 Namun, menganalisis sentimen dari ribuan ulasan secara manual memakan waktu dan tenaga. Oleh karena itu, diperlukan sebuah algoritma yang dapat memprediksi sentimen dari ulasan tersebut secara otomatis. Dalam proyek ini, saya mengembangkan sebuah model Natural Language Processing (NLP) untuk memprediksi sentimen ulasan berdasarkan rating yang diberikan tamu hotel. Model ini akan dilatih dan diuji menggunakan dataset Trip Advisor Hotel Reviews yang berisi 20,491 ulasan [1].
 ## Business Understanding
 ***
+
+### Konteks Bisnis
+Dalam industri perhotelan, ulasan pelanggan memainkan peran kritis dalam membentuk citra dan reputasi bisnis. Namun, volume besar ulasan online membuat analisis manual menjadi tidak efisien dan tidak praktis.
+
 ### Problem Statements
-Berdasarkan latar belakang di atas, berikut adalah masalah yang akan diselesaikan dalam proyek ini:
-- Bagaimana melakukan pra-pemrosesan teks pada data ulasan hotel agar siap digunakan untuk melatih model?
-- Bagaimana merancang arsitektur model deep learning untuk memprediksi sentimen berdasarkan rating ulasan?
+Berdasarkan latar belakang dan tantangan bisnis di atas, berikut adalah masalah utama yang akan diselesaikan:
+
+- Bagaimana hotel dapat secara efisien dan akurat memahami sentimen pelanggan dari ribuan ulasan online?
+- Bagaimana mengubah data ulasan mentah menjadi wawasan strategis yang dapat meningkatkan kualitas layanan?
 
 ### Goals
-- Melakukan pra-pemrosesan data teks dengan baik agar siap digunakan untuk melatih model.
-- Merancang dan mengimplementasikan model deep learning untuk memprediksi sentimen berdasarkan data ulasan hotel.
+- Mengembangkan sistem otomatis untuk menganalisis sentimen ulasan hotel guna:
+  - Mengidentifikasi area perbaikan layanan secara cepat dan presisi
+  - Membantu manajemen hotel membuat keputusan berbasis data
+  - Meningkatkan kepuasan pelanggan melalui umpan balik tepat waktu
+
+- Merancang model machine learning yang dapat:
+
+  - Mengklasifikasikan sentimen dengan akurasi tinggi
+  - Memberikan insight yang dapat ditindaklanjuti oleh tim manajemen
+
+### Manfaat Bisnis
+
+1. Analisis Cepat Umpan Balik Pelanggan
+- Memproses ribuan ulasan dalam waktu singkat
+- Mendeteksi tren sentimen secara real-time
+
+2. Peningkatan Kualitas Layanan
+- Identifikasi cepat aspek-aspek yang perlu diperbaiki
+- Fokus pada area yang secara konsisten menerima umpan balik negatif
+
+3. Strategi Pemasaran Berbasis Data
+- Memahami persepsi pelanggan tentang layanan hotel
+- Merancang kampanye pemasaran yang lebih tepat sasaran
+
+4. Keunggulan Kompetitif
+- Respon cepat terhadap kebutuhan pelanggan
+- Membangun reputasi sebagai hotel yang peduli dan responsif
 
 ### Solution Statements
 Solusi yang dapat dilakukan sebagai berikut:
@@ -52,6 +82,8 @@ Solusi yang dapat dilakukan sebagai berikut:
 
 ## Data Understanding
 ***
+
+### Informasi Dataset
 Dataset yang digunakan dapat diakses menggunakan [Kaggle](https://www.kaggle.com/datasets/andrewmvd/trip-advisor-hotel-reviews?resource=download)  
 Informasi dari dataset dapat dirangkum sebagai berikut:
 
@@ -68,6 +100,37 @@ Pada berkas yang diunduh berisi 1 berkas dengan jenis format _.csv_ yang bernama
 - Review: kalimat/sentimen/pendapat/kritik yang ditulis oleh individu
 - Rating: perasaan yang dirasakan oleh individu yang di gambarkan dengan skala angka 1-5.
 
+### Analisis Kuantitatif Dataset
+1. Jumlah Data
+- Total Baris: 20491 Baris
+- Total Kolom: 2 (Review dan Rating)
+
+2. Statistik Deskriptif Kolom
+- Kolom Review
+  - Tipe Data: String
+  - Deskripsi: Kalimat/sentimen/pendapat/kritik yang ditulis oleh individu
+
+- Kolom Rating
+  - Tipe Data: Integer
+  - Rentang Nilai: 1-5
+  - Deskripsi: Perasaan yang dirasakan oleh individu yang digambarkan dengan skala angka
+
+3. Kondisi Data
+- Pemeriksaan Kualitas Data
+  - Missing Values: 0
+  - Duplikat: 0
+  - Distribusi Rating
+
+| Rating | Jumlah Review|
+|--------| -------------|
+| 1      | 9054         |
+| 2      | 6039         |
+| 3      | 2184         |
+| 4      | 1793         |
+| 5      | 1421         |
+
+  - Tampilan Dataset
+
 Tabel 2. Tampilan dataset awal dalam bentuk _DataFrame pandas_.  
 
 |   | Review                                               | Rating   |
@@ -82,22 +145,59 @@ Tabel 2. Tampilan dataset awal dalam bentuk _DataFrame pandas_.
 
 ## Data Preparation
 
-### Langkah-langkah pra-pemrosesan data
-1. Mendownload Dataset
-- Dataset digunakan dalam proyek ini adalah tripadvisor_hotel_reviews.csv, yang berisi ulasan dan rating dari pengguna mengenai hotel di Tripadvisor. Dataset ini dibaca dari file CSV menggunakan Pandas.
-2. Mengecek Data
-- Setelah memuat data, langkah pertama adalah memeriksa informasi umum mengenai dataset untuk memastikan kualitas data.
-3. Pembersihan Teks
-Data teks dari ulasan perlu dibersihkan agar model dapat memprosesnya dengan lebih baik. Berikut adalah langkah-langkah pembersihan yang dilakukan:
+### Teknik Penanganan Data
+
+1. Pembersihan Data
+
+Metode pembersihan teks yang dilakukan:
 - Menghapus tag HTML
 - Menghapus URL
 - Menghapus emoji
 - Menghapus angka
 - Menghapus tanda baca
-- Mengubah teks menjadi huruf kecil
-- Menghapus stopwords (kata umum yang tidak memberikan makna penting dalam analisis)
-4. Membaca dataset yang sudah bersih ke DataFrame pandas
-- Pada bagian ini akan ditampilkan dataset yang sudah bersih, lalu tampilannya akan seperti tabel 3.
+- Mengonversi teks ke huruf kecil
+- Menghapus stopwords
+
+2. Transformasi Data
+
+Konversi rating menjadi label sentimen:
+
+- Positif (1): Rating 3, 4, dan 5
+- Negatif (0): Rating 1 dan 2
+
+3. Pembagian Dataset
+
+Teknik pembagian data menggunakan stratified sampling:
+
+- Training Set: 70% dari total data
+- Validation Set: 15% dari total data
+- Test Set: 15% dari total data
+
+Tujuan Pembagian:
+
+- Memastikan distribusi label sentimen seimbang
+- Mencegah bias dalam proses pelatihan model
+- Menyediakan data independen untuk evaluasi
+
+4. Tokenisasi
+
+Proses mengubah teks menjadi format yang dapat diproses model:
+
+- Menggunakan BERT Tokenizer
+- Maksimum panjang token: 128
+- Padding dan truncation dilakukan untuk konsistensi
+
+5. Pertimbangan Teknis
+
+Metode pembersihan dirancang untuk:
+
+- Mengurangi noise dalam data
+- Meningkatkan kualitas input model
+- Memfokuskan analisis pada konten utama review
+
+6. Membaca dataset yang sudah bersih ke DataFrame pandas
+
+Pada bagian ini akan ditampilkan dataset yang sudah bersih, lalu tampilannya akan seperti tabel 3.
 
 Tabel 3. Tampilan dataset yang sudah bersih bentuk _DataFrame pandas_.  
 
@@ -108,52 +208,6 @@ Tabel 3. Tampilan dataset yang sudah bersih bentuk _DataFrame pandas_.
 | 2 | nice rooms experience hotel monaco seattle goo...    | 3        |        1        |Positive          |
 | 3 | unique great stay wonderful time hotel monaco ...    | 5        |        1        |Positive          |
 | 4 | great stay great stay went seahawk game awesom...    | 5        |        1        |Positive          |
-
-### Pemetaan Sentimen
-
-Pada tahap ini, kita mengonversi rating menjadi label sentimen biner:
-- Rating lebih dari atau sama dengan 3 dianggap sebagai ulasan positif (1).
-- Rating kurang dari 3 dianggap sebagai ulasan negatif (0).
-
-### Pembagian Data
-Dataset dibagi menjadi tiga bagian utama: training set, validation set, dan test set. Pembagian dilakukan dengan teknik stratified sampling untuk memastikan distribusi label sentimen tetap seimbang di semua subset. Data training digunakan untuk melatih model, sementara data validasi digunakan untuk mengukur performa model selama proses pelatihan. Data test digunakan sebagai evaluasi akhir untuk menilai kemampuan model pada data yang benar-benar baru.
-```bash
-X = combined_df['cleaned_review'].values
-y = combined_df['sentiment_encoded'].values
-X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
-X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.2, random_state=42, stratify=y_temp)
-```
-
-### Tokenisasi
-Pada tahap ini, data teks ulasan yang telah disiapkan diubah menjadi format yang dapat diproses oleh model BERT. Proses ini terdiri dari beberapa tahapan penting, masing-masing dengan parameter yang disesuaikan untuk menghasilkan representasi data yang optimal.
-
-1. Tokenisasi dengan Tokenizer Pra-Latihan BERT
-Setiap ulasan teks diproses menggunakan tokenizer pra-latihan BERT (bert-base-uncased) dari pustaka transformers. Tokenizer ini memecah teks menjadi unit kecil (subwords) atau token, memastikan bahwa setiap kata direpresentasikan sesuai dengan vokabulari model BERT. Hasil tokenisasi mencakup:
-
-- input_ids: Representasi indeks token berdasarkan vokabulari BERT.
-- attention_mask: Masking biner (0 dan 1) yang menunjukkan token mana yang harus diperhatikan model (1) dan mana yang diabaikan (0, seperti padding).
-
-Parameter Tokenizer:
-
-- Maksimum Panjang Token: 128 token. Ini ditetapkan untuk menjaga efisiensi komputasi sambil tetap menangkap konteks ulasan. Ulasan yang lebih pendek dari panjang ini akan dipenuhi (padded), sementara ulasan yang lebih panjang akan dipotong (truncated).
-- Do Lowercase: Karena menggunakan model uncased, semua huruf diubah menjadi huruf kecil untuk konsistensi dengan vokabulari BERT.
-
-2. Konversi ke Format PyTorch Dataset
-Setelah tokenisasi, data hasil tokenisasi diubah ke dalam format PyTorch Dataset, sehingga dapat dengan mudah dikelola selama proses pelatihan. Setiap sampel dalam dataset mencakup:
-
-- input_ids: Indeks token.
-- attention_mask: Masking biner.
-- labels: Label sentimen ulasan (positif = 1, negatif = 0).
-
-3. Pembagian Data dan Loader
-Dataset dibagi menjadi tiga subset (training, validation, dan test) menggunakan metode stratifikasi untuk menjaga distribusi label yang seimbang. Setelah itu, masing-masing subset dimasukkan ke dalam DataLoader untuk digunakan selama pelatihan dan evaluasi.
-
-Parameter DataLoader:
-
-- Batch Size: 16. Batch kecil digunakan untuk meminimalkan kebutuhan memori GPU sambil memastikan stabilitas proses pelatihan.
-- Shuffling: Diaktifkan untuk dataset training agar model tidak belajar pola tertentu berdasarkan urutan data.
-
-Dengan mengikuti langkah-langkah ini, dataset yang telah diproses menjadi siap digunakan oleh model BERT untuk tugas klasifikasi sentimen, memastikan bahwa setiap teks ulasan diterjemahkan ke dalam format numerik yang sesuai dengan spesifikasi model.
 
 ## Modeling
 ***
